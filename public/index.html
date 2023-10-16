@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Word Length Calculator</title>
+</head>
+<body>
+  <h1>Word Length Calculator</h1>
+  <form id="wordForm">
+    <label for="wordInput">Enter a word:</label>
+    <input type="text" id="wordInput" name="word">
+    <button type="submit">Calculate Length</button>
+  </form>
+  <p>Length of the word is: <span id="wordLength"></span></p>
+  <script>
+    const wordForm = document.getElementById('wordForm');
+    const wordLengthElement = document.getElementById('wordLength');
+
+    wordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const wordInput = document.getElementById('wordInput').value;
+      
+      const response = await fetch('/compute-length', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ word: wordInput }),
+      });
+
+      const data = await response.json();
+
+      if (data.length !== undefined) {
+        wordLengthElement.textContent = data.length;
+      }
+    });
+  </script>
+</body>
+</html>
+

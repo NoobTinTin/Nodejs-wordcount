@@ -3,6 +3,13 @@ const app = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
+// Serve static files (HTML, CSS, etc.)
+app.use(express.static('public'));
+
+// Default route for the root URL
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 // Endpoint to compute word length
 app.post('/compute-length', (req, res) => {
